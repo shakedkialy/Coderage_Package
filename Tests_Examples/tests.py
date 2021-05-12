@@ -1,10 +1,14 @@
-from Tests_Examples import code1
-
+from code1 import *
+import sys
+# sys.path.insert(0, '../')
+print("-----------\n")
+print(sys.path)
+print("-----------\n")
 
 def test1():
-    assert(code1.func1(5) == 6)
+    assert(func1(5) == 6)
 
 def test2():
-    assert(code1.func1(3) == 2)
+    assert(func1(3) == 4)
 
 

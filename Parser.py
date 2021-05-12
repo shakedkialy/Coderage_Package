@@ -12,13 +12,13 @@ class Parser:
         self.cover = {}
         self.uncover = {}
         self.runId = self.db.get_last_run_id()
-
+        self.runId = 1 if self.runId is None else self.runId + 1
         self.parse_pytest()
         self.parseCoverage()
         self.parseAnnotate()
 
     def parse_pytest(self):
-        file_path = self.directory + "/filetest.xml"
+        file_path = self.directory + "/tests.xml"
         tree = et.parse(file_path)
         root = tree.getroot()
         test_rows = []

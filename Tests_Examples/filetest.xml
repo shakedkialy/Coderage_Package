@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="Doron-pc" name="pytest" skipped="0" tests="2" time="0.272" timestamp="2021-05-08T01:31:11.174360"><testcase classname="tests" name="test1" time="0.003" /><testcase classname="tests" name="test2" time="0.003"><failure message="assert 4 == 6&#10; +  where 4 = &lt;function func1 at 0x000001E6DC52D678&gt;(3)&#10; +    where &lt;function func1 at 0x000001E6DC52D678&gt; = code1.func1&#10; +  and   6 = &lt;function func1 at 0x000001E6DC52D8B8&gt;(5)&#10; +    where &lt;function func1 at 0x000001E6DC52D8B8&gt; = code2.func1">def test2():
-&gt;       assert(code1.func1(3) == code2.func1(5))
-E       assert 4 == 6
-E        +  where 4 = &lt;function func1 at 0x000001E6DC52D678&gt;(3)
-E        +    where &lt;function func1 at 0x000001E6DC52D678&gt; = code1.func1
-E        +  and   6 = &lt;function func1 at 0x000001E6DC52D8B8&gt;(5)
-E        +    where &lt;function func1 at 0x000001E6DC52D8B8&gt; = code2.func1
-
-tests.py:9: AssertionError</failure></testcase></testsuite></testsuites>
