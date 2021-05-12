@@ -13,7 +13,7 @@ def parsePytest(file_path):
 
     # TODO change timestamp to same string format in all tables
     for element in root:
-        summary_rows.append((runId, int(element.attrib["errors"]), int(element.attrib["tests"]) - int(element.attrib["failures"]), int(element.attrib["failures"]), int(element.attrib["skipped"]), float(element.attrib["time"]), element.attrib["timestamp"]))
+        summary_rows.append([runId, int(element.attrib["errors"]), int(element.attrib["tests"]) - int(element.attrib["failures"]), int(element.attrib["failures"]), int(element.attrib["skipped"]), float(element.attrib["time"]), element.attrib["timestamp"]])
         for child in element:
             if not len(child):
                 passTests[child.attrib["name"]] = child.attrib["classname"]
@@ -22,7 +22,7 @@ def parsePytest(file_path):
                 for grandchild in child:
                     failTests[child.attrib["name"]] = grandchild.text
                     test_rows.append(
-                        (runId, child.attrib["classname"], child.attrib["name"], 0, grandchild.text, float(child.attrib["time"])))
+                        [runId, child.attrib["classname"], child.attrib["name"], 0, grandchild.text, float(child.attrib["time"])])
 
     # call insert function
 
@@ -41,13 +41,13 @@ def parseCoverage(file_path):
 
     cover = {}
     uncover = {}
-    sum_rows.append((runId, float(root.attrib["line-rate"]), int(root.attrib["lines-valid"]), root.attrib["timestamp"]))
+    sum_rows.append([runId, float(root.attrib["line-rate"]), int(root.attrib["lines-valid"]), root.attrib["timestamp"]])
     for element in root:
         if element.tag == 'packages':
             for package in element:
                 for classes in package:
                     for testClass in classes:
-                        coverarge_rows.append((runId, float(testClass.attrib["line-rate"]), package.attrib["name"], testClass.attrib["filename"], testClass.attrib["name"]))
+                        coverarge_rows.append([runId, float(testClass.attrib["line-rate"]), package.attrib["name"], testClass.attrib["filename"], testClass.attrib["name"]])
                         for classContest in testClass:
                             if classContest.tag == 'lines':
                                 for line in classContest:
@@ -95,3 +95,10 @@ def parseAnnotateFile(file_path):
             function_details_rows.append([runId, file_name, function_name, is_tested])
     print(function_details_rows)
 
+if __name__ == "__main__":
+
+    # os.system("pytest --cov-report xml --cov=C:\\Users\\GL\Documents\\Year_3\\Open_Workshop\\Coderage C:\\Users\\GL\\Documents\\Year_3\\Open_Workshop\\Coderage\\Tests_Examples\\tests.py --junitxml=filetest.xml")
+
+    parsePytest("C:\\Users\\GL\\Documents\\Year_3\\Open_Workshop\\Coderage\\Tests_Examples\\filetest.xml")
+    parseCoverage("C:\\Users\\GL\\Documents\\Year_3\\Open_Workshop\\Coderage\\Tests_Examples\\coverage.xml")
+    parseAnnotate("C:\\Users\\GL\\Documents\\Year_3\\Open_Workshop\\Coderage\\covers\\code1.py,cover")
