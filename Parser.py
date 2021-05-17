@@ -98,9 +98,10 @@ class Parser:
     def parseAnnotateFile(self, file_path):
         function_details_rows = []
         file_name = file_path.split('\\')[-1]
+        #TODO: insert correct file name, not result file name.
         file_name = file_name[:file_name.index(',')]
         with open(file_path, 'r') as file:
-            functions = file.read().split('> def')
+            functions = file.read().split('def')
             for function in functions[1:]:
                 function_name = function.split('\n')[0]
                 function_name = function_name[:function_name.index("(")]
@@ -110,4 +111,3 @@ class Parser:
                 function_details_rows.append((self.runId, file_name, function_name, is_tested))
 
         self.db.insert_functions_details(function_details_rows)
-        # print(function_details_rows)

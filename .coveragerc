@@ -1,0 +1,2 @@
+[run]
+omit = [Tests_Examples\*, Parser.py, main.py, __init__.py]
