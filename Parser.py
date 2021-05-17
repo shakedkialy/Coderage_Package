@@ -44,9 +44,9 @@ class Parser:
         self.db.insert_tests_details(test_rows)
         self.db.insert_run_summary(summary_rows)
 
-        print("----------- Passed / Failed -----------")
-        print(test_rows)
-        print(summary_rows)
+        # print("----------- Passed / Failed -----------")
+        # print(test_rows)
+        # print(summary_rows)
 
     def parseCoverage(self):
         file_path = self.directory + "/coverage.xml"
@@ -63,7 +63,7 @@ class Parser:
                     for classes in package:
                         for testClass in classes:
                             coverage_rows.append((self.runId,
-                                                   float(testClass.attrib["line-rate"]), package.attrib["name"], testClass.attrib["filename"], testClass.attrib["name"]))
+                                                  float(testClass.attrib["line-rate"]), package.attrib["name"], testClass.attrib["filename"], testClass.attrib["name"]))
                             for classContest in testClass:
                                 if classContest.tag == 'lines':
                                     for line in classContest:
@@ -85,21 +85,18 @@ class Parser:
         self.db.insert_coverage(coverage_rows)
         self.db.insert_coverage_summary(sum_rows)
 
-        print("----------- Coverage -----------")
-        print(sum_rows)
-        print(coverage_rows)
+        # print("----------- Coverage -----------")
+        # print(sum_rows)
+        # print(coverage_rows)
 
     def parseAnnotate(self):
-        if os.path.isdir(self.directory):
-            for filename in os.listdir(self.directory):
-                if filename.endswith(",cover"):
-                    self.parseAnnotateFile(self.directory + "/" + filename)
-        if os.path.isfile(self.directory):
-            self.parseAnnotateFile(self.directory)
+        dir_path = self.directory + "/annotate"
+        for filename in os.listdir(dir_path):
+            if filename.endswith(",cover"):
+                self.parseAnnotateFile(dir_path + "/" + filename)
 
     def parseAnnotateFile(self, file_path):
         function_details_rows = []
-        runId = 0
         file_name = file_path.split('\\')[-1]
         file_name = file_name[:file_name.index(',')]
         with open(file_path, 'r') as file:
@@ -110,7 +107,7 @@ class Parser:
                 is_tested = 0
                 if '>' in function:
                     is_tested = 1
-                function_details_rows.append((runId, file_name, function_name, is_tested))
+                function_details_rows.append((self.runId, file_name, function_name, is_tested))
 
         self.db.insert_functions_details(function_details_rows)
-        print(function_details_rows)
+        # print(function_details_rows)

@@ -1,12 +1,12 @@
-def func1(x):
+def func4(x):
     return x + 1
 
 
-def func2(arr, i):
+def func5(arr, i):
     return arr[i]
 
 
-def func3(isTrue):
+def func6(isTrue):
     if isTrue:
         return "True!"
     else:
