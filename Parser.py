@@ -11,8 +11,7 @@ class Parser:
         self.failTests = {}
         self.cover = {}
         self.uncover = {}
-        self.runId = self.db.get_last_run_id()
-        self.runId = 1 if self.runId is None else self.runId + 1
+        self.runId = self.db.get_last_run_id() + 1
         self.parse_pytest()
         self.parseCoverage()
         self.parseAnnotate()
@@ -101,7 +100,7 @@ class Parser:
         #TODO: insert correct file name, not result file name.
         file_name = file_name[:file_name.index(',')]
         with open(file_path, 'r') as file:
-            functions = file.read().split('def')
+            functions = file.read().split('def ')
             for function in functions[1:]:
                 function_name = function.split('\n')[0]
                 function_name = function_name[:function_name.index("(")]

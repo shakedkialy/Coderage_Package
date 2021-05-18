@@ -143,6 +143,8 @@ class DatabaseHandler:
         cur = self.connection.cursor()
         cur.execute("SELECT max(run_id) FROM run_summary")
         rows = cur.fetchall()
+        if rows[0][0] is None:
+            return 0
         return rows[0][0]
 
 
