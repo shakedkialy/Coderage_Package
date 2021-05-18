@@ -40,10 +40,8 @@ if __name__ == "__main__":
     if not os.path.exists(output_path):
         if not delete_out:
             os.system("mkdir %(output_path)s" % {"output_path": output_path})
-            print("     mkdir %(output_path)s" % {"output_path": output_path})
         else:
-            print("mkdir %(output_path)s %(output_path)s\\annotate" % {"output_path": output_path})
-            os.system("     mkdir %(output_path)s %(output_path)s\\annotate" % {"output_path": output_path})
+            os.system("mkdir %(output_path)s %(output_path)s\\annotate" % {"output_path": output_path})
     db = DatabaseHandler(output_path)
     cov_modules = ""
     for module in code_path:
@@ -52,22 +50,23 @@ if __name__ == "__main__":
     if not delete_out and os.path.exists(output_path):
         output_path += str(db.get_last_run_id() + 1)
 
-    # TODO: how to not run coverage on __init__?
-    # TODO: add html report support
     os.system(
-        "python -m pytest --cov-report annotate:%(cov_annotate)s --cov-report xml:%(Covxml)s %(cov_modules)s"
+        "python -m pytest --cov-report annotate:%(cov_annotate)s --cov-report html:%(cov_html)s --cov-report xml:%(Covxml)s %(cov_modules)s"
         " %(test_path)s --junitxml=%(Testsxml)s %(extra_args)s" % {
             "cov_modules": cov_modules,
             "test_path": test_path,
             "Covxml": output_path + "/coverage.xml",
             "Testsxml": output_path + "/tests.xml",
             "cov_annotate": output_path + "/annotate",
+            "cov_html": output_path + "/html",
             "extra_args": extra_args})
 
     parser = Parser(db, output_path)
     if delete_out:
-        os.system("rm -r %(Covxml)s %(Testsxml)s %(cov_annotate)s .hypothesis .pytest_cache" % {"Covxml": output_path + "\\coverage.xml",
-            "Testsxml": output_path + "\\tests.xml", "cov_annotate": output_path + "\\annotate"})
-
+        os.system("rm -r %(Covxml)s %(Testsxml)s %(cov_annotate)s %(cov_html)s .hypothesis .pytest_cache" % {
+            "Covxml": output_path + "\\coverage.xml",
+            "Testsxml": output_path + "\\tests.xml",
+            "cov_annotate": output_path + "\\annotate",
+            "cov_html": output_path + "\\html"})
 
     # python main.py module=. tests=Tests_Examples

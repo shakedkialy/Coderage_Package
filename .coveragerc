@@ -1,2 +1,6 @@
 [run]
-omit = [Tests_Examples\*, Parser.py, main.py, __init__.py]
+omit = Tests_Examples/*
+        Parser.py
+        main.py
+        */__init__.py
+        DatabaseHandler.py
