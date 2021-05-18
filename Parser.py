@@ -97,8 +97,9 @@ class Parser:
     def parseAnnotateFile(self, file_path):
         function_details_rows = []
         file_name = file_path.split('\\')[-1]
-        #TODO: insert correct file name, not result file name.
         file_name = file_name[:file_name.index(',')]
+        file_name = file_name.split('/')[-1].split('_')
+        file_name = file_name[0] + '/' + file_name[1]
         with open(file_path, 'r') as file:
             functions = file.read().split('def ')
             for function in functions[1:]:

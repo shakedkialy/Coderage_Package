@@ -6,7 +6,7 @@ NUM_ARGS = 5
 
 
 def parse_args(argv):
-    code_path, test_path, output_path, extra_args, delete_out = "", "", "", "", ""
+    code_path, test_path, output_path, extra_args, delete_out, omit = "", "", "", "", "", ""
     for arg in argv:
         if "module" in arg:
             modules = arg.split("=")[1]
@@ -17,6 +17,8 @@ def parse_args(argv):
             output_path = arg.split("=")[1]
         if "delete_out" in arg:
             delete_out = arg.split("=")[1]
+        if "omit" in arg:
+            omit = arg.split("=")[1].split(",")
         if len(sys.argv) > NUM_ARGS:
             extra_args = sys.argv[NUM_ARGS:len(sys.argv)]
         extra_args = " ".join(extra_args)
@@ -30,11 +32,11 @@ def parse_args(argv):
         delete_out = False
     if delete_out == "":
         delete_out = True
-    return code_path, test_path, output_path, delete_out, extra_args
+    return code_path, test_path, output_path, omit, delete_out, extra_args
 
 
 if __name__ == "__main__":
-    code_path, test_path, output_path, delete_out, extra_args = parse_args(sys.argv)
+    code_path, test_path, output_path, omit, delete_out, extra_args = parse_args(sys.argv)
 
     # TODO: check slashes in windows and linux.
     if not os.path.exists(output_path):
@@ -49,6 +51,14 @@ if __name__ == "__main__":
 
     if not delete_out and os.path.exists(output_path):
         output_path += str(db.get_last_run_id() + 1)
+
+    #TODO: not add file twice
+    #TODO: how to remove?
+    if omit:
+        with open('.coveragerc', 'a') as file:
+            for file_to_omit in omit:
+                file.write('\n       ' + file_to_omit)
+
 
     os.system(
         "python -m pytest --cov-report annotate:%(cov_annotate)s --cov-report html:%(cov_html)s --cov-report xml:%(Covxml)s %(cov_modules)s"
