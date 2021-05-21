@@ -1,3 +1,8 @@
+Highcharts.getJSON(
+  'C:\Users\Nitzan.DESKTOP-85V9GI2\Desktop\Coderage-main/data.json',
+  function (data) {
+  console.log(data);
+
 Highcharts.chart('container', {
   chart: {
     renderTo: 'container' },
@@ -36,7 +41,7 @@ Highcharts.chart('container', {
 
   series: [{
     name: 'Passed',
-    data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    data: data
   }, {
     name: 'Failed',
     data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
@@ -100,7 +105,7 @@ Highcharts.chart('container2', {
 
   series: [{
     name: 'Passed',
-    data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    data: data.data
   }, {
     name: 'Failed',
     data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
@@ -123,5 +128,6 @@ Highcharts.chart('container2', {
       }
     }]
   }
-
+}
+);
 });
