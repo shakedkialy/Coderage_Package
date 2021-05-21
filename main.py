@@ -1,6 +1,7 @@
 import sys
 from Parser import *
 from DatabaseHandler import *
+from html_files.HTML import *
 
 NUM_ARGS = 5
 
@@ -37,6 +38,8 @@ if __name__ == "__main__":
         else:
             os.system("mkdir %(output_path)s %(output_path)s\\annotate" % {"output_path": output_path})
     db = DatabaseHandler(output_path)
+    html = HTML(output_path, db)
+
     cov_modules = ""
     for module in code_path:
         cov_modules += ("--cov=%(code_path)s " % {"code_path": module})
@@ -65,6 +68,9 @@ if __name__ == "__main__":
             "extra_args": extra_args})
 
     parser = Parser(db, output_path)
+
+    html.generating_html()
+
     if delete_out:
         os.system("rm -r %(Covxml)s %(Testsxml)s %(cov_annotate)s .hypothesis .pytest_cache" % {
             "Covxml": output_path + "\\coverage.xml",
