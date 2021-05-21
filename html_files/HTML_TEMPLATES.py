@@ -234,6 +234,7 @@ DETAILED_LAST_RUN = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
      <link rel="stylesheet" href="detailedLastRun.css" type="text/css">
+     <link rel="stylesheet" href="highchart2.css" type="text/css">
     <title>Detailed Last Run</title>
 </head>
 <div id="header">
@@ -246,13 +247,29 @@ DETAILED_LAST_RUN = """<!DOCTYPE html>
     <h1>Detailed Last Run</h1>
     <br></br>
     <div class="parent">
-        <p class="graph">graph</p>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        
+        <figure class="highcharts-figure">
+          <div id="container"></div>
+        </figure>
+        
+       
         <p class="new">New functions added to coverage:</p>
         <p class="not">Functions still not covered:</p>
         <p class="test">Functions not tested</p>
     </div>
+    <script type="text/javascript" src="highchart2.js"></script>
 </body>
 </html>"""
+
+
+
+
+
+
 
 TEST_ANALYSIS = """<!DOCTYPE html>
 <html lang="en">

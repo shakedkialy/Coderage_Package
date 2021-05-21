@@ -27,6 +27,14 @@ class HTML:
             message = HIGHCHARTS_MSG.format(test_start, passed, failed, skipped, cov_start, cover)
             f.write(message)
 
+    def generating_highcharts2_js(self):
+        test_start, passed, failed, skipped = self.db.get_main_test_history()
+        cov_start, cover = self.db.get_main_coverage_history()
+        with open('html_files\highchart2.js', 'w') as f:
+
+            message = HIGHCHARTS2_MSG.format(test_start, passed, failed, skipped, cov_start, cover)
+            f.write(message)
+
 
     def generating_coverage_analysis_html(self):
         data = []
@@ -47,3 +55,5 @@ class HTML:
 
             message = DETAILED_LAST_RUN.format(data=data)
             f.write(message)
+
+
