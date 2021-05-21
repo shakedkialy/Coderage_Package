@@ -3,7 +3,7 @@ from sqlite3 import Error
 import SQLQueries
 
 class DatabaseHandler:
-    RESULTS_LIMIT = 10
+    RESULTS_LIMIT = 20
 
     def __execute_query(self, query):
         self.__open_connection()
@@ -128,7 +128,20 @@ class DatabaseHandler:
     """
 
     def get_last_tested_vs_not(self):
-        return self.__execute_query(SQLQueries.LAST_TESTED_VS_NOT_GRAPH.format(DatabaseHandler.RESULTS_LIMIT))
+        query = self.__execute_query(SQLQueries.LAST_TESTED_VS_NOT_GRAPH.format(DatabaseHandler.RESULTS_LIMIT))
+        runid = []
+        tested = []
+        not_tested = []
+        for row in query:
+            runid.append(row[0])
+            tested.append(row[1])
+            not_tested.append(row[2])
+
+        runid.reverse()
+        tested.reverse()
+        not_tested.reverse()
+
+        return runid, tested, not_tested
 
     def get_last_untested(self):
         return self.__execute_query(SQLQueries.LAST_UNTESTED_LIST)
@@ -143,18 +156,18 @@ class DatabaseHandler:
     ----- Html - Coverage Analysis By File page ----
     """
 
-    def get_file_coverage(self, file_name):
-        return self.__execute_query(SQLQueries.COVERAGE_FILE_GRAPH.format(file_name, DatabaseHandler.RESULTS_LIMIT))
+    def get_file_coverage(self):
+        return self.__execute_query(SQLQueries.COVERAGE_FILE.format(DatabaseHandler.RESULTS_LIMIT))
 
     """
     ----- Html - Test Analysis By File ----
     """
 
-    def get_file_tested_vs_not(self, file_name):
-        return self.__execute_query(SQLQueries.TESTS_FILE_TESTED_VS_NOT_GRAPH.format(file_name, DatabaseHandler.RESULTS_LIMIT))
+    def get_file_tested_vs_not(self):
+        return self.__execute_query(SQLQueries.TESTS_FILE_TESTED_VS_NOT.format(DatabaseHandler.RESULTS_LIMIT))
 
-    def get_file_test_history(self, file_name):
-        return self.__execute_query(SQLQueries.TESTS_FILE_HISTORY_GRAPH.format(file_name, DatabaseHandler.RESULTS_LIMIT))
+    def get_file_test_history(self):
+        return self.__execute_query(SQLQueries.TESTS_FILE_HISTORY.format(DatabaseHandler.RESULTS_LIMIT))
 
-    def get_file_tests_did_pass(self, file_name):
-        return self.__execute_query(SQLQueries.TESTS_FILE_DID_PASS.format(file_name))
+    def get_file_tests_did_pass(self):
+        return self.__execute_query(SQLQueries.TESTS_FILE_DID_PASS)

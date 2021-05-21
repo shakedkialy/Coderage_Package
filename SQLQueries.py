@@ -96,8 +96,8 @@ MAIN_COVERAGE_HISTORY = """SELECT cs.run_id, cs.line_rate*100 as percent
 
 LAST_TESTED_VS_NOT_GRAPH = """select *
                                 from (SELECT fd.run_id, 
-                                        (CAST(COUNT(case when is_tested = 1 then 1 end) as float)/COUNT(*))*100 as test,
-                                        (CAST(COUNT(case when is_tested = 0 then 1 end) as float)/COUNT(*))*100 as notTest
+                                        COUNT(case when is_tested = 1 then 1 end) as test,
+                                        COUNT(case when is_tested = 0 then 1 end) as notTest
                                 FROM functions_details fd
                                 group by fd.run_id)
                                 order by run_id desc
@@ -107,7 +107,7 @@ LAST_UNTESTED_LIST = """SELECT fd.file_name, fd.function_name
                         FROM functions_details fd
                         where fd.is_tested = 0
                         and fd.run_id in (select max(run_id)
-                                          from functions_details) """  # function_details
+                                          from functions_details)"""  # function_details
 
 LAST_CHANGED_FUNCTIONS_LIST = """SELECT fd.file_name, fd.function_name, 
                                 case fd.is_tested when 1 then "Tested" when 0 then "Not Tested" end as cur_run,
@@ -139,31 +139,31 @@ LAST_CHANGED_TESTS_LIST = """SELECT td.class_name, td.test_Name,
 ----- Html - Coverage Analysis By File page ----
 """
 
-COVERAGE_FILE_GRAPH = """SELECT c.run_id, c.line_rate*100 as percent
+COVERAGE_FILE = """SELECT c.run_id, c.file_name, c.line_rate*100 as percent
                             FROM coverage c
-                            where c.file_name like "%{}%"
-                            order by run_id desc
-                            limit {}"""
+                            where c.run_id in (select distinct run_id
+                                            	from coverage
+                                             order by run_id desc
+                                            	limit {})
+                            order by c.file_name desc"""
 
 """
 ----- Html - Test Analysis By File ----
 """
 
-TESTS_FILE_TESTED_VS_NOT_GRAPH = """select *
-                                from (SELECT fd.run_id, 
-                                        (CAST(COUNT(case when is_tested = 1 then 1 end) as float)/COUNT(*))*100 as test,
-                                        (CAST(COUNT(case when is_tested = 0 then 1 end) as float)/COUNT(*))*100 as notTest
+TESTS_FILE_TESTED_VS_NOT = """select *
+                                from (SELECT fd.run_id, fd.file_name,
+                                        Round((CAST(COUNT(case when is_tested = 1 then 1 end) as float)/COUNT(*))*100,2) as test,
+                                        Round((CAST(COUNT(case when is_tested = 0 then 1 end) as float)/COUNT(*))*100,2) as notTest
                                 FROM functions_details fd
-                                WHERE fd.file_name like "%{}%"
-                                group by fd.run_id)
+                                group by fd.run_id, fd.file_name)
                                 order by run_id desc
                                 limit {}"""
 
-TESTS_FILE_HISTORY_GRAPH = """SELECT td.run_id, td.class_name, 
+TESTS_FILE_HISTORY = """SELECT td.run_id, td.class_name, 
                                        SUM(td.did_pass) as passed,
                                        SUM(case td.did_pass when 1 then 0 when 0 then 1 end) as failed
                                 FROM tests_details td
-                                where td.class_name like "%{}%"
                                 GROUP by td.run_id, td.class_name
                                 order by td.run_id desc
                                 limit {}"""
@@ -178,6 +178,5 @@ TESTS_FILE_DID_PASS = """SELECT td.class_name, td.test_Name,
                             and td2.test_Name = td.test_Name
                         where td.run_id in (select max(run_id)
                                             from tests_details)
-                              and td.class_name like "%{}%"
                               and (td2.did_pass is NULL or td2.did_pass != td.did_pass)
                         order by td.class_name, td.test_Name, prev_run"""

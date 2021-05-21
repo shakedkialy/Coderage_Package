@@ -4,13 +4,8 @@ MAIN_HTML_MSG = """<!DOCTYPE html>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             <title>Coderage</title>
             <link rel="icon" sizes="15x15" href="unnamed.png">
-            <link rel="stylesheet" href="style.css" type="text/css">
+            <link rel="stylesheet" href="main_style.css" type="text/css">
             <link rel="stylesheet" href="highchart.css" type="text/css">
-            <script type="text/javascript" src="jquery.min.js"></script>
-            <script type="text/javascript">
-                jQuery(document).ready(coverage.index_ready);
-            </script>
-
 
 
         </head>
@@ -24,8 +19,8 @@ MAIN_HTML_MSG = """<!DOCTYPE html>
         <div id="index">
             <table class="index">
                 <thead>
-                    <tr class="tablehead" title="Click to sort">
-                        <th class="name left headerSortDown shortkey_n">Run Number</th>
+                    <tr class="tablehead">
+                        <th class="shortkey_s">Run Number</th>
                         <th class="shortkey_s">TestsPath</th>
                         <th class="shortkey_m">Passed</th>
                         <th class="shortkey_x">Failed</th>
@@ -64,10 +59,10 @@ MAIN_HTML_MSG = """<!DOCTYPE html>
                     <a class="nav" href="detailedLastRun.html">Detailed Last Ran Analysis</a> 
                 </span>
                 <span>
-                    <a class="nav" href="/">Detailed Tests Results</a> 
+                    <a class="nav" href="pytest_report.html">Detailed Tests Results</a> 
                 </span>
                 <span>
-                    <a class="nav" href="/">Detailed Coverage</a> 
+                    <a class="nav" href="Results/html/index.html">Detailed Coverage</a> 
                 </span>
                 <span>
                     <a class="nav" href="coverageAnalysis.html">Coverage Analysis By File</a> 
@@ -108,24 +103,30 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coverage Analysis By File</title>
     <style>
     * {{
       box-sizing: border-box;
     }}
+    
+    body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; font-size: 1em; background: #fff; color: #000; }}
 
     .parent {{
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 700px;
+        max-height: 700px;
+        overflow-y: scroll;
     }}
 
     img {{ width: 20%; height: 20%; margin-left: 40%;}}
     #myInput {{
       background-position: 10px 10px;
       background-repeat: no-repeat;
-      width: 100%;
-      font-size: 16px;
+      width: 50%;
+      font-size: 12px;
       padding: 12px 20px 12px 40px;
       border: 1px solid #ddd;
       margin-bottom: 12px;
@@ -133,9 +134,9 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
 
     #myTable {{
       border-collapse: collapse;
-      width: 100%;
+      width: 50%;
       border: 1px solid #ddd;
-      font-size: 18px;
+      font-size: 12px;
     }}
 
     #myTable th, #myTable td {{
@@ -150,6 +151,11 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
     #myTable tr.header, #myTable tr:hover {{
       background-color: #f1f1f1;
     }}
+    
+    h1{{
+        text-align: center;
+    }}
+    
     </style>
 </head>
 <body>
@@ -168,41 +174,12 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
 
     <table id="myTable">
       <tr class="header">
-        <th style="width:60%;">Name</th>
-        <th style="width:40%;">Country</th>
+        <th>Run number</th>
+        <th>File name</th>
+        <th>Coverage Percentages</th>
+
       </tr>
-      <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Germany</td>
-      </tr>
-      <tr>
-        <td>Berglunds snabbkop</td>
-        <td>Sweden</td>
-      </tr>
-      <tr>
-        <td>Island Trading</td>
-        <td>UK</td>
-      </tr>
-      <tr>
-        <td>Koniglich Essen</td>
-        <td>Germany</td>
-      </tr>
-      <tr>
-        <td>Laughing Bacchus Winecellars</td>
-        <td>Canada</td>
-      </tr>
-      <tr>
-        <td>Magazzini Alimentari Riuniti</td>
-        <td>Italy</td>
-      </tr>
-      <tr>
-        <td>North/South</td>
-        <td>UK</td>
-      </tr>
-      <tr>
-        <td>Paris specialites</td>
-        <td>France</td>
-      </tr>
+      {}
     </table>
 
     <script>
@@ -213,7 +190,7 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
       table = document.getElementById("myTable");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {{
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[1];
         if (td) {{
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {{
@@ -234,8 +211,14 @@ DETAILED_LAST_RUN = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
      <link rel="stylesheet" href="detailedLastRun.css" type="text/css">
+      <link rel="stylesheet" href="main_style.css" type="text/css">
      <link rel="stylesheet" href="highchart2.css" type="text/css">
     <title>Detailed Last Run</title>
+    <style>h1.detailed{{
+        text-align: center;
+        display: block;
+    }}</style>
+    
 </head>
 <div id="header">
     <div class="content">
@@ -244,7 +227,7 @@ DETAILED_LAST_RUN = """<!DOCTYPE html>
 </div>
 <body>
     <br></br>
-    <h1>Detailed Last Run</h1>
+    <h1 class="detailed">Detailed Last Run</h1>
     <br></br>
     <div class="parent">
         <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -257,66 +240,118 @@ DETAILED_LAST_RUN = """<!DOCTYPE html>
         </figure>
         
        
-        <p class="new">New functions added to coverage:</p>
-        <p class="not">Functions still not covered:</p>
-        <p class="test">Functions not tested</p>
+        <div class="new">
+        <span>Functions not tested:</span>
+        <table id="index">
+                <thead>
+                    <tr class="tablehead">
+                        <th class="shortkey_s">File name</th>
+                        <th class="shortkey_s">Test name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="not">
+        <span>Functions that changed status from previous run:</span>
+                <table id="index">
+                <thead>
+                    <tr class="tablehead">
+                        <th class="shortkey_s">File name</th>
+                        <th class="shortkey_s">Function name</th>
+                        <th class="shortkey_s">Current run</th>
+                        <th class="shortkey_s">Previous run</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {}
+                </tbody>
+            </table>        
+        </div>
+        
+        
+        <div class="test">
+        <span>Tests that changed status from previous run:</span>
+                    <table id="index">
+                <thead>
+                    <tr class="tablehead">
+                        <th class="shortkey_s">Class name</th>
+                        <th class="shortkey_s">Test name</th>
+                        <th class="shortkey_s">Current run</th>
+                        <th class="shortkey_s">Previous run</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {}
+                </tbody>
+            </table>
+        </div>
     </div>
     <script type="text/javascript" src="highchart2.js"></script>
+    <br></br>
 </body>
 </html>"""
 
-
-
-
-
-
-
-TEST_ANALYSIS = """<!DOCTYPE html>
+TEST_ANALYSIS =  """"<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Coverage Analysis By File</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests Analysis By File</title>
     <style>
     * {{
       box-sizing: border-box;
     }}
+    
+    body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; font-size: 1em; background: #fff; color: #000; }}
 
     .parent {{
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 300px;
+        max-height: 300px;
+        overflow-y: scroll;
     }}
 
     img {{ width: 20%; height: 20%; margin-left: 40%;}}
-    #myInput {{
+    #myInput, #myInput2, #myInput3{{
       background-position: 10px 10px;
       background-repeat: no-repeat;
-      width: 100%;
-      font-size: 16px;
+      width: 50%;
+      font-size: 12px;
       padding: 12px 20px 12px 40px;
       border: 1px solid #ddd;
       margin-bottom: 12px;
     }}
 
-    #myTable {{
+    #myTable, #myTable2, #myTable3 {{
       border-collapse: collapse;
-      width: 100%;
+      width: 50%;
       border: 1px solid #ddd;
-      font-size: 18px;
+      font-size: 12px;
     }}
 
-    #myTable th, #myTable td {{
+    #myTable th, #myTable2 th, #myTable3 th, #myTable td, #myTable2 td, #myTable3 td {{
       text-align: left;
       padding: 12px;
     }}
 
-    #myTable tr {{
+    #myTable tr, #myTable2 tr, #myTable3 tr {{
       border-bottom: 1px solid #ddd;
     }}
 
-    #myTable tr.header, #myTable tr:hover {{
+    #myTable tr.header, #myTable tr:hover, #myTable2 tr.header, #myTable2 tr:hover, #myTable3 tr.header, #myTable3 tr:hover {{
       background-color: #f1f1f1;
     }}
+    
+    h1{{
+        text-align: center;
+    }}
+    
     </style>
 </head>
 <body>
@@ -327,49 +362,22 @@ TEST_ANALYSIS = """<!DOCTYPE html>
 </div>
 
     <br></br>
-    <h1>Coverage Analysis By File</h1>
+    <h1>Tests Analysis By File</h1>
     <br></br>
+    
     <div class="parent">
-
+    <h3>Tested Vs. not Tested</h3>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for file name.." title="Type in a file name">
 
     <table id="myTable">
       <tr class="header">
-        <th style="width:60%;">Name</th>
-        <th style="width:40%;">Country</th>
+        <th>Run number</th>
+        <th>File name</th>
+        <th>Test Percentages</th>
+        <th>Not test Percentages</th>
+
       </tr>
-      <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Germany</td>
-      </tr>
-      <tr>
-        <td>Berglunds snabbkop</td>
-        <td>Sweden</td>
-      </tr>
-      <tr>
-        <td>Island Trading</td>
-        <td>UK</td>
-      </tr>
-      <tr>
-        <td>Koniglich Essen</td>
-        <td>Germany</td>
-      </tr>
-      <tr>
-        <td>Laughing Bacchus Winecellars</td>
-        <td>Canada</td>
-      </tr>
-      <tr>
-        <td>Magazzini Alimentari Riuniti</td>
-        <td>Italy</td>
-      </tr>
-      <tr>
-        <td>North/South</td>
-        <td>UK</td>
-      </tr>
-      <tr>
-        <td>Paris specialites</td>
-        <td>France</td>
-      </tr>
+      {}
     </table>
 
     <script>
@@ -380,7 +388,7 @@ TEST_ANALYSIS = """<!DOCTYPE html>
       table = document.getElementById("myTable");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {{
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[1];
         if (td) {{
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {{
@@ -393,5 +401,85 @@ TEST_ANALYSIS = """<!DOCTYPE html>
     }}
     </script>
 </div>
+
+<br></br>
+
+<div class="parent">
+    <h3>Tests status</h3>
+    <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search for file name.." title="Type in a file name">
+
+    <table id="myTable2">
+      <tr class="header">
+        <th>Run number</th>
+        <th>Class name</th>
+        <th>Passed number</th>
+        <th>Failed number</th>
+
+      </tr>
+      {}
+    </table>
+
+    <script>
+    function myFunction2() {{
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput2");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable2");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {{
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {{
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {{
+            tr[i].style.display = "";
+          }} else {{
+            tr[i].style.display = "none";
+          }}
+        }}
+      }}
+    }}
+    </script>
+</div>
+
+<br></br>
+
+
+<div class="parent">
+    <h3>Tests That changed status</h3>
+    <input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="Search for file name.." title="Type in a file name">
+
+    <table id="myTable3">
+      <tr class="header">
+        <th>Class name</th>
+        <th>Test name</th>
+        <th>Current run</th>
+        <th>Previous run</th>
+
+      </tr>
+      {}
+    </table>
+
+    <script>
+    function myFunction3() {{
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput3");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable3");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {{
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {{
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {{
+            tr[i].style.display = "";
+          }} else {{
+            tr[i].style.display = "none";
+          }}
+        }}
+      }}
+    }}
+    </script>
+</div>
+
 </body>
 </html>"""

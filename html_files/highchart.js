@@ -30,19 +30,19 @@ Highcharts.chart('container', {
       label: {
         connectorAllowed: false
       },
-      pointStart: 23
+      pointStart: 119
     }
   },
 
   series: [{
     name: 'Passed',
-    data: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+    data: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
   }, {
     name: 'Failed',
-    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   }, {
     name: 'Skipped',
-    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   }],
 
   responsive: {
@@ -94,13 +94,13 @@ Highcharts.chart('container2', {
       label: {
         connectorAllowed: false
       },
-      pointStart: 23
+      pointStart: 119
     }
   },
 
   series: [{
     name: '%',
-    data: [18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87]
+    data: [18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87]
   }],
 
   responsive: {

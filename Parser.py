@@ -64,16 +64,18 @@ class Parser:
 
     def parseAnnotate(self):
         if os.path.isdir(self.__directory):
-            for filename in os.listdir(self.__directory):
+            for filename in os.listdir(self.__directory + "/annotate"):
                 if filename.endswith(",cover"):
-                    self.parseAnnotateFile(self.__directory + "/" + filename)
+                    self.parseAnnotateFile(self.__directory + "/annotate/" + filename)
         if os.path.isfile(self.__directory):
             self.parseAnnotateFile(self.__directory)
 
     def parseAnnotateFile(self, file_path):
         function_details_rows = []
-        file_name = file_path.split('\\')[-1]
+        file_name = file_path.split('/')[-1]
         file_name = file_name[:file_name.index(',')]
+        file_name = file_name.replace('_', '\\')
+        print(file_name)
         with open(file_path, 'r') as file:
             functions = file.read().split('> def')
             for function in functions[1:]:
