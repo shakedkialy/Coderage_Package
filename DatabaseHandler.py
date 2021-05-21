@@ -132,7 +132,3 @@ class DatabaseHandler:
 
     def get_file_tests_did_pass(self, file_name):
         return self.__execute_query(SQLQueries.TESTS_FILE_DID_PASS.format(file_name))
-
-
-
-
