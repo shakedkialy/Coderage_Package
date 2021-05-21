@@ -1,18 +1,21 @@
-from DatabaseHandler import *
 from html_files.HTML_TEMPLATES import *
 from html_files.JS_TEMPLATES import *
+
 class HTML:
 
     def __init__(self, output_path, db):
         self.output_path = output_path
         self.db = db
+        self.generating_test_analysis_html()
+        self.generating_detailed_last_run_html()
+        self.generating_coverage_analysis_html()
+        self.generating_highCharts_js()
+        self.generating_main_html()
 
     def generating_main_html(self):
-        main_table = self.db.get_main_table()[0]
-        code2 = [5, 6]
+        main_table = self.db.get_main_table()
         with open('html_files\index.html', 'w') as f:
-
-            message = MAIN_HTML_MSG.format(main_table=main_table, code2=code2)
+            message = MAIN_HTML_MSG.format(main_table=main_table)
             f.write(message)
 
 
@@ -35,7 +38,6 @@ class HTML:
     def generating_detailed_last_run_html(self):
         data = []
         with open('html_files\detailedLastRun.html', 'w') as f:
-
             message = DETAILED_LAST_RUN.format(data=data)
             f.write(message)
 

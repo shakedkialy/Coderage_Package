@@ -42,9 +42,11 @@ class DatabaseHandler:
             return 0
         return rows[0][0]
 
-    def __init__(self, project_path):
+    def __init__(self, project_path, code_path, test_path):
         self.projectPath = project_path + "/coderage.db"
         self.connection = None
+        self.code_path = code_path
+        self.test_path = test_path
 
         if not self.__open_connection():
             exit(1)
@@ -89,13 +91,37 @@ class DatabaseHandler:
     """
 
     def get_main_table(self):
-        return self.__execute_query(SQLQueries.MAIN_TABLE)
+        query = self.__execute_query(SQLQueries.MAIN_TABLE)[0]
+        main_table = [query[0]] + [self.test_path] + list(query[1:6]) + [self.code_path] + list(query[6:])
+        return main_table
 
     def get_main_test_history(self):
-        return self.__execute_query(SQLQueries.MAIN_TESTS_HISTORY.format(DatabaseHandler.RESULTS_LIMIT))
+        query = self.__execute_query(SQLQueries.MAIN_TESTS_HISTORY.format(DatabaseHandler.RESULTS_LIMIT))
+        first_run_id = query[len(query)-1][0]
+        passed = []
+        failed = []
+        skipped = []
+        for row in query:
+            passed.append(row[1])
+            failed.append(row[2])
+            skipped.append(row[3])
+
+        passed.reverse()
+        failed.reverse()
+        skipped.reverse()
+
+        return first_run_id, passed, failed, skipped
 
     def get_main_coverage_history(self):
-        return self.__execute_query(SQLQueries.MAIN_COVERAGE_HISTORY.format(DatabaseHandler.RESULTS_LIMIT))
+        query = self.__execute_query(SQLQueries.MAIN_COVERAGE_HISTORY.format(DatabaseHandler.RESULTS_LIMIT))
+        first_run_id = query[len(query)-1][0]
+        results = []
+        for row in query:
+            results.append(row[1])
+
+        results.reverse()
+
+        return first_run_id, results
 
     """
     ----- Html - Last run analysis page ----

@@ -32,8 +32,7 @@ if __name__ == "__main__":
             os.system("mkdir %(output_path)s" % {"output_path": output_path})
         else:
             os.system("mkdir %(output_path)s %(output_path)s\\annotate" % {"output_path": output_path})
-    db = DatabaseHandler(output_path)
-    html = HTML(output_path, db)
+    db = DatabaseHandler(output_path, code_path, test_path)
 
     cov_modules = ""
     for module in code_path:
@@ -58,8 +57,7 @@ if __name__ == "__main__":
         exit()
 
     parser = Parser(db, output_path)
-
-    html.generating_html()
+    html = HTML(output_path, db)
 
     if delete_out:
         os.system("rm -r %(Covxml)s %(Testsxml)s %(cov_annotate)s .pytest_cache" % {

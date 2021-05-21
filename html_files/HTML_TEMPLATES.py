@@ -41,7 +41,7 @@ MAIN_HTML_MSG = """<!DOCTYPE html>
                     <tr class="file">
                         <td class="name left">{main_table[0]}</td>
                         <td>{main_table[1]}</td>
-                        <td> {main_table[2]}</td>
+                        <td>{main_table[2]}</td>
                         <td>{main_table[3]}</td>
                         <td>{main_table[4]}</td>
                         <td>{main_table[5]}</td>
@@ -91,20 +91,10 @@ MAIN_HTML_MSG = """<!DOCTYPE html>
         <div class="charts">
         <figure class="highcharts-figure">
           <div id="container"></div>
-          <p class="highcharts-description">
-            Basic line chart showing trends in a dataset. This chart includes the
-            <code>series-label</code> module, which adds a label to each line for
-            enhanced readability.
-          </p>
         </figure>
 
         <figure class="highcharts-figure">
           <div id="container2"></div>
-          <p class="highcharts-description">
-            Basic line chart showing trends in a dataset. This chart includes the
-            <code>series-label</code> module, which adds a label to each line for
-            enhanced readability.
-          </p>
         </figure>
 
         </div>
@@ -120,18 +110,18 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
     <meta charset="UTF-8">
     <title>Coverage Analysis By File</title>
     <style>
-    * {
+    * {{
       box-sizing: border-box;
-    }
+    }}
 
-    .parent {
+    .parent {{
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
+    }}
 
-    img { width: 20%; height: 20%; margin-left: 40%;}
-    #myInput {
+    img {{ width: 20%; height: 20%; margin-left: 40%;}}
+    #myInput {{
       background-position: 10px 10px;
       background-repeat: no-repeat;
       width: 100%;
@@ -139,27 +129,27 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
       padding: 12px 20px 12px 40px;
       border: 1px solid #ddd;
       margin-bottom: 12px;
-    }
+    }}
 
-    #myTable {
+    #myTable {{
       border-collapse: collapse;
       width: 100%;
       border: 1px solid #ddd;
       font-size: 18px;
-    }
+    }}
 
-    #myTable th, #myTable td {
+    #myTable th, #myTable td {{
       text-align: left;
       padding: 12px;
-    }
+    }}
 
-    #myTable tr {
+    #myTable tr {{
       border-bottom: 1px solid #ddd;
-    }
+    }}
 
-    #myTable tr.header, #myTable tr:hover {
+    #myTable tr.header, #myTable tr:hover {{
       background-color: #f1f1f1;
-    }
+    }}
     </style>
 </head>
 <body>
@@ -216,24 +206,24 @@ COVERAGE_HTML_ANALYSIS = """"<!DOCTYPE html>
     </table>
 
     <script>
-    function myFunction() {
+    function myFunction() {{
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
       table = document.getElementById("myTable");
       tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
+      for (i = 0; i < tr.length; i++) {{
         td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
+        if (td) {{
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {{
             tr[i].style.display = "";
-          } else {
+          }} else {{
             tr[i].style.display = "none";
-          }
-        }
-      }
-    }
+          }}
+        }}
+      }}
+    }}
     </script>
 </div>
 </body>
@@ -270,18 +260,18 @@ TEST_ANALYSIS = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <title>Coverage Analysis By File</title>
     <style>
-    * {
+    * {{
       box-sizing: border-box;
-    }
+    }}
 
-    .parent {
+    .parent {{
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
+    }}
 
-    img { width: 20%; height: 20%; margin-left: 40%;}
-    #myInput {
+    img {{ width: 20%; height: 20%; margin-left: 40%;}}
+    #myInput {{
       background-position: 10px 10px;
       background-repeat: no-repeat;
       width: 100%;
@@ -289,27 +279,27 @@ TEST_ANALYSIS = """<!DOCTYPE html>
       padding: 12px 20px 12px 40px;
       border: 1px solid #ddd;
       margin-bottom: 12px;
-    }
+    }}
 
-    #myTable {
+    #myTable {{
       border-collapse: collapse;
       width: 100%;
       border: 1px solid #ddd;
       font-size: 18px;
-    }
+    }}
 
-    #myTable th, #myTable td {
+    #myTable th, #myTable td {{
       text-align: left;
       padding: 12px;
-    }
+    }}
 
-    #myTable tr {
+    #myTable tr {{
       border-bottom: 1px solid #ddd;
-    }
+    }}
 
-    #myTable tr.header, #myTable tr:hover {
+    #myTable tr.header, #myTable tr:hover {{
       background-color: #f1f1f1;
-    }
+    }}
     </style>
 </head>
 <body>
@@ -366,24 +356,24 @@ TEST_ANALYSIS = """<!DOCTYPE html>
     </table>
 
     <script>
-    function myFunction() {
+    function myFunction() {{
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
       table = document.getElementById("myTable");
       tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
+      for (i = 0; i < tr.length; i++) {{
         td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
+        if (td) {{
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {{
             tr[i].style.display = "";
-          } else {
+          }} else {{
             tr[i].style.display = "none";
-          }
-        }
-      }
-    }
+          }}
+        }}
+      }}
+    }}
     </script>
 </div>
 </body>

@@ -73,12 +73,12 @@ INSERT_FUNCTIONS_DETAILS = """INSERT INTO functions_details(run_id,file_name,fun
 ----- Html - Main page ----
 """
 
-MAIN_TABLE = """SELECT *
-                    FROM run_summary rs
-                    left join coverage_summary cv
-                    on rs.run_id = cv.run_id
-                    where rs.run_id in (select max(run_id)
-                                          from run_summary)"""
+MAIN_TABLE = """SELECT rs.run_id, rs.passed, rs.failed, rs.errors, rs.failed, rs.run_time, cv.line_rate*100, cv.lines_valid
+                FROM run_summary rs
+                left join coverage_summary cv
+                on rs.run_id = cv.run_id
+                where rs.run_id in (select max(run_id)
+                                    from run_summary)"""
 
 MAIN_TESTS_HISTORY = """SELECT rs.run_id, rs.passed, rs.failed, rs.skipped
                             FROM run_summary rs

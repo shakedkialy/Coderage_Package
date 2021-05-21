@@ -1,8 +1,3 @@
-Highcharts.getJSON(
-  'C:\Users\Nitzan.DESKTOP-85V9GI2\Desktop\Coderage-main/data.json',
-  function (data) {
-  console.log(data);
-
 Highcharts.chart('container', {
   chart: {
     renderTo: 'container' },
@@ -35,19 +30,19 @@ Highcharts.chart('container', {
       label: {
         connectorAllowed: false
       },
-      pointStart: 2010
+      pointStart: 23
     }
   },
 
   series: [{
     name: 'Passed',
-    data: data
+    data: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
   }, {
     name: 'Failed',
-    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   }, {
     name: 'Skipped',
-    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   }],
 
   responsive: {
@@ -78,7 +73,7 @@ Highcharts.chart('container2', {
 
   yAxis: {
     title: {
-      text: 'Total Coverage Functions'
+      text: 'Coverage %'
     }
   },
 
@@ -99,19 +94,13 @@ Highcharts.chart('container2', {
       label: {
         connectorAllowed: false
       },
-      pointStart: 2010
+      pointStart: 23
     }
   },
 
   series: [{
-    name: 'Passed',
-    data: data.data
-  }, {
-    name: 'Failed',
-    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-  }, {
-    name: 'Skipped',
-    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    name: '%',
+    data: [18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87, 18.87]
   }],
 
   responsive: {
@@ -130,4 +119,3 @@ Highcharts.chart('container2', {
   }
 }
 );
-});
