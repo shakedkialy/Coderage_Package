@@ -2,5 +2,8 @@
 omit = Tests_Examples/*
        Parser.py
        main.py
+       HTML.py
+       HTML_TEMPLATES.py
+       JS_TEMPLATES.py
        */__init__.py
        DatabaseHandler.py
