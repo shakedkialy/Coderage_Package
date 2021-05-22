@@ -2,7 +2,6 @@ import os
 import xml.etree.ElementTree as et
 from datetime import datetime, timezone
 
-
 class Parser:
 
     def __init__(self, db, directory):
@@ -14,7 +13,7 @@ class Parser:
         self.parseAnnotate()
 
     def parse_pytest(self):
-        file_path = self.__directory + "/tests.xml"
+        file_path = os.path.join(self.__directory, "tests.xml")
         tree = et.parse(file_path)
         root = tree.getroot()
         test_rows = []
@@ -41,7 +40,7 @@ class Parser:
 
 
     def parseCoverage(self):
-        file_path = self.__directory + "/coverage.xml"
+        file_path = os.path.join(self.__directory, "coverage.xml")
         tree = et.parse(file_path)
         root = tree.getroot()
         coverage_rows = []
@@ -64,23 +63,25 @@ class Parser:
 
     def parseAnnotate(self):
         if os.path.isdir(self.__directory):
-            for filename in os.listdir(self.__directory + "/annotate"):
+            for filename in os.listdir(os.path.join(self.__directory, "annotate")):
                 if filename.endswith(",cover"):
-                    self.parseAnnotateFile(self.__directory + "/annotate/" + filename)
+                    self.parseAnnotateFile(os.path.join(self.__directory, "annotate", filename))
         if os.path.isfile(self.__directory):
             self.parseAnnotateFile(self.__directory)
 
     def parseAnnotateFile(self, file_path):
         function_details_rows = []
-        file_name = file_path.split('/')[-1]
+        file_name = os.path.basename(file_path)
         file_name = file_name[:file_name.index(',')]
-        file_name = file_name.replace('_', '\\')
-        print(file_name)
+        file_name = file_name.replace('_', '/')
         with open(file_path, 'r') as file:
             functions = file.read().split('> def')
             for function in functions[1:]:
                 function_name = function.split('\n')[0]
-                function_name = function_name[:function_name.index("(")]
+                try:
+                    function_name = function_name[:function_name.index("(")]
+                except:
+                    continue
                 is_tested = 0
                 if '>' in function:
                     is_tested = 1

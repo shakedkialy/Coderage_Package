@@ -1,8 +1,8 @@
 import sys
-from Parser import *
 from DatabaseHandler import *
-from html_files.HTML import *
-
+from Parser import *
+from HTML import *
+from os import path
 
 def parse_args(argv):
     code_path, test_path, output_path, extra_args, delete_out = "", "Tests", "Results", "", True
@@ -26,12 +26,16 @@ def parse_args(argv):
 if __name__ == "__main__":
     code_path, test_path, output_path, delete_out, extra_args = parse_args(sys.argv)
 
-    # TODO: check slashes in windows and linux.
+#    TODO: check slashes in windows and linux.
     if not os.path.exists(output_path):
         if not delete_out:
             os.system("mkdir %(output_path)s" % {"output_path": output_path})
         else:
-            os.system("mkdir %(output_path)s %(output_path)s\\annotate" % {"output_path": output_path})
+            os.system("mkdir %(output_path)s %(annotate_path)s" % {"output_path": output_path,
+                                                                 "annotate_path": path.join(output_path, "annotate")})
+    else:
+        shutil.rmtree(path.join(output_path, "html"))
+
     db = DatabaseHandler(output_path, code_path, test_path)
 
     cov_modules = ""
@@ -46,24 +50,24 @@ if __name__ == "__main__":
         " %(test_path)s --junitxml=%(Testsxml)s --html=%(pytest_report)s %(extra_args)s" % {
             "cov_modules": cov_modules,
             "test_path": test_path,
-            "Covxml": output_path + "/coverage.xml",
-            "Testsxml": output_path + "/tests.xml",
-            "cov_annotate": output_path + "/annotate",
-            "cov_html": output_path + "/html",
-            "pytest_report": output_path + "/pytest_report.html",
+            "Covxml": path.join(output_path, "coverage.xml"),
+            "Testsxml": path.join(output_path, "tests.xml"),
+            "cov_annotate": path.join(output_path, "annotate"),
+            "cov_html": path.join(output_path, "html"),
+            "pytest_report": path.join(output_path, "html", "pytest_report.html"),
             "extra_args": extra_args})
 
-    if exit_code != 0:
+    if exit_code != 0 and exit_code != 1:
         exit()
 
     parser = Parser(db, output_path)
-    html = HTML(output_path, db)
+    html = HTML(path.join(output_path, "html"), db)
 
     if delete_out:
         os.system("rm -r %(Covxml)s %(Testsxml)s %(cov_annotate)s .pytest_cache" % {
-            "Covxml": output_path + "\\coverage.xml",
-            "Testsxml": output_path + "\\tests.xml",
-            "cov_annotate": output_path + "\\annotate"
+            "Covxml": path.join(output_path, "coverage.xml"),
+            "Testsxml": path.join(output_path, "tests.xml"),
+            "cov_annotate": path.join(output_path, "annotate")
         })
 
     # python main.py module=. tests=Tests_Examples

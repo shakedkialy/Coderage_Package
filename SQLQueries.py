@@ -73,7 +73,7 @@ INSERT_FUNCTIONS_DETAILS = """INSERT INTO functions_details(run_id,file_name,fun
 ----- Html - Main page ----
 """
 
-MAIN_TABLE = """SELECT rs.run_id, rs.passed, rs.failed, rs.errors, rs.failed, rs.run_time, cv.line_rate*100, cv.lines_valid
+MAIN_TABLE = """SELECT rs.run_id, rs.passed, rs.failed, rs.errors, rs.skipped, rs.run_time, cv.line_rate*100, cv.lines_valid
                 FROM run_summary rs
                 left join coverage_summary cv
                 on rs.run_id = cv.run_id
@@ -111,7 +111,7 @@ LAST_UNTESTED_LIST = """SELECT fd.file_name, fd.function_name
 
 LAST_CHANGED_FUNCTIONS_LIST = """SELECT fd.file_name, fd.function_name, 
                                 case fd.is_tested when 1 then "Tested" when 0 then "Not Tested" end as cur_run,
-                                case fd2.is_tested when 1 then "Tested" when 0 then "Not Tested" else "Doesn't Exist" end as prev_run
+                                case fd2.is_tested when 1 then "Tested" when 0 then "Not Tested" else "Didn't Exist" end as prev_run
                         FROM functions_details fd
                         left join functions_details fd2
                         on fd2.run_id = fd.run_id - 1
@@ -120,7 +120,7 @@ LAST_CHANGED_FUNCTIONS_LIST = """SELECT fd.file_name, fd.function_name,
                         where fd.run_id in (select max(run_id)
                                           from functions_details) 
                             and (fd2.is_tested is NULL or fd2.is_tested != fd.is_tested)
-                        order by fd.file_name, fd.file_name, prev_run"""  # Functions that changed status from earlier - func, now, before
+                        order by fd.file_name, fd.function_name, prev_run"""  # Functions that changed status from earlier - func, now, before
 
 LAST_CHANGED_TESTS_LIST = """SELECT td.class_name, td.test_Name, 
                                     case td.did_pass when 1 then "Passed" when 0 then "Failed" end as cur_run,
