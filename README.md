@@ -1,5 +1,5 @@
 # OpenSourceWorkshop - Coderage
-<img src="https://media.wired.com/photos/5926db217034dc5f91becd6b/master/w_582,c_limit/so-logo-s.jpg" width="250"> 
+<img src="https://github.com/shakedkialy/Coderage/blob/main/html_files/logo.png?raw=true" width="250"> 
 The purpose of this project is to enable easy and efficient analyzing and conclusion drawing regarding software testing.
 Coderage is a package that allows running tests and code coverage in comparison over time.
 
