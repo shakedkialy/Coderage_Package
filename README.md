@@ -11,4 +11,4 @@ requirements for running: \
     3. command line for example: \
       python main.py module=module1,module2 tests=test1,test2 out_dir=results \
       if you clone our files in git, this command line should work when running from the main folder: \
-      __python main.py module=. tests=Tests_Examples__ \
+      *python main.py module=. tests=Tests_Examples* \
