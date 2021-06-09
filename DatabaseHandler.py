@@ -3,9 +3,17 @@ from sqlite3 import Error
 import SQLQueries
 
 class DatabaseHandler:
+    """
+    This class implement a DatabaseHandler - the interface to the DB which holds all the information need to create
+    the html files.
+    """
     RESULTS_LIMIT = 20
 
     def __execute_query(self, query):
+        """
+        :param query: query to execute
+        :return: all the rows returned by the query
+        """
         self.__open_connection()
         cur = self.connection.cursor()
         cur.execute(query)
@@ -13,6 +21,10 @@ class DatabaseHandler:
         return cur.fetchall()
 
     def __add_table(self, create_table_sql):
+        """
+        adds a table to the DB
+        :param create_table_sql: the SQL statement that creates the table.
+        """
         try:
             cursor = self.connection.cursor()
             cursor.execute(create_table_sql)
@@ -20,6 +32,9 @@ class DatabaseHandler:
             print(e)
 
     def __create_tables(self):
+        """
+        creates all the tables necessary for the project.
+        """
         self.__add_table(SQLQueries.CREATE_TESTS_DETAILS)
         self.__add_table(SQLQueries.CREATE_RUN_SUMMARY)
         self.__add_table(SQLQueries.CREATE_COVERAGE)
@@ -27,6 +42,10 @@ class DatabaseHandler:
         self.__add_table(SQLQueries.CREATE_FUNCTIONS_DETAILS)
 
     def __open_connection(self):
+        """
+        tries to open a connection with the DB
+        :return: True if the connection was creates successfully, False otherwise.
+        """
         try:
             self.connection = sqlite3.connect(self.projectPath)
             return True
@@ -37,12 +56,21 @@ class DatabaseHandler:
             return False
 
     def get_last_run_id(self):
+        """
+        :return: the last runId from the DB
+        """
         rows = self.__execute_query("SELECT max(run_id) FROM run_summary")
         if rows[0][0] is None:
             return 0
         return rows[0][0]
 
     def __init__(self, project_path, code_path, test_path):
+        """
+        inits a DB object.
+        :param project_path: the directory the project runs in
+        :param code_path: the directory of the code
+        :param test_path: the directory of the tests
+        """
         self.projectPath = project_path + "/coderage.db"
         self.connection = None
         self.code_path = code_path
@@ -60,10 +88,9 @@ class DatabaseHandler:
 
     def __insert_to_table(self, sql_command, data):
         """
-        Create a new project into the projects table
-        :param conn:
-        :param project:
-        :return: project id
+        inserts data to table
+        :param sql_command: the command that inserts that data
+        :param data: the data to insert
         """
         self.__open_connection()
         for line in data:
@@ -72,18 +99,38 @@ class DatabaseHandler:
             self.connection.commit()
 
     def insert_tests_details(self, data):
+        """
+        inserts data to tests_details table
+        :param data:  the data to insert
+        """
         self.__insert_to_table(SQLQueries.INSERT_TESTS_DETAILS, data)
 
     def insert_run_summary(self, data):
+        """
+        inserts data to run_summary table
+        :param data:  the data to insert
+        """
         self.__insert_to_table(SQLQueries.INSERT_RUN_SUMMARY, data)
 
     def insert_coverage(self, data):
+        """
+        inserts data to coverage table
+        :param data:  the data to insert
+        """
         self.__insert_to_table(SQLQueries.INSERT_COVERAGE, data)
 
     def insert_coverage_summary(self, data):
+        """
+        inserts data to coverage_summary table
+        :param data:  the data to insert
+        """
         self.__insert_to_table(SQLQueries.INSERT_COVERAGE_SUMMARY, data)
 
     def insert_functions_details(self, data):
+        """
+        inserts data to functions_details table
+        :param data:  the data to insert
+        """
         self.__insert_to_table(SQLQueries.INSERT_FUNCTIONS_DETAILS, data)
 
     """

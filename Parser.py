@@ -3,8 +3,16 @@ import xml.etree.ElementTree as et
 from datetime import datetime, timezone
 
 class Parser:
+    """
+    this class implements a parser which parses the test and coverage results.
+    """
 
     def __init__(self, db, directory):
+        """
+        init a parser object
+        :param db: the DB which will hold the parsed information
+        :param directory: the directory of the result files that needs to be parsed.
+        """
         self.__db = db
         self.__directory = directory
         self.__runId = self.__db.get_last_run_id() + 1
@@ -13,6 +21,9 @@ class Parser:
         self.parseAnnotate()
 
     def parse_pytest(self):
+        """
+        parses the results of the pytest run and inserts to the relevant tables in the DB.
+        """
         file_path = os.path.join(self.__directory, "tests.xml")
         tree = et.parse(file_path)
         root = tree.getroot()
@@ -40,6 +51,10 @@ class Parser:
 
 
     def parseCoverage(self):
+        """
+        parses the results of the coverage run and inserts to the relevant tables in the DB.
+        (results of the coverage run  = how many lines are covered)
+        """
         file_path = os.path.join(self.__directory, "coverage.xml")
         tree = et.parse(file_path)
         root = tree.getroot()
@@ -62,6 +77,9 @@ class Parser:
         self.__db.insert_coverage_summary(sum_rows)
 
     def parseAnnotate(self):
+        """
+        iterates all the annotate files created and parses each one using parseAnnotateFile function.
+        """
         if os.path.isdir(self.__directory):
             for filename in os.listdir(os.path.join(self.__directory, "annotate")):
                 if filename.endswith(",cover"):
@@ -70,6 +88,10 @@ class Parser:
             self.parseAnnotateFile(self.__directory)
 
     def parseAnnotateFile(self, file_path):
+        """
+        parses the results of the annotate run and inserts to the relevant tables in the DB.
+        (results of the annotate run  = which functions are being run and which aren't)
+        """
         function_details_rows = []
         file_name = os.path.basename(file_path)
         file_name = file_name[:file_name.index(',')]
@@ -90,4 +112,7 @@ class Parser:
         self.__db.insert_functions_details(function_details_rows)
 
     def get_run_id(self):
+        """
+        :return: the current runId
+        """
         return self.__runId

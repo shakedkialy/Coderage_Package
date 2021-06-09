@@ -5,6 +5,11 @@ from HTML import *
 from os import path
 
 def parse_args(argv):
+    """
+    this function parses the command line arguments
+    :param argv: array of command line arguments
+    :return: arguments neccassry to run the program
+    """
     code_path, test_path, output_path, extra_args, delete_out = "", "Tests", "Results", "", True
     for arg in argv[1:]:
         if "module" in arg:
