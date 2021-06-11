@@ -17,4 +17,15 @@ requirements for running: \
     
       python main.py module=. tests=Tests_Examples
     
+    After this command line script is complete, you should see the following message:
+
+      Coverage annotated source written to dir Results\annotate
+      Coverage HTML written to dir Results\html
+      Coverage XML written to file Results\coverage.xml
+
+    To view the results of this command open chrome (or any other web browser) and copy to the url section any of the following paths:
+    <full_path_to_Coderage_project>/Results/html/main_index.html
+    <full_path_to_Coderage_project>/Results/html/detailedLastRun.html
+    <full_path_to_Coderage_project>/Results/html/testAnalysis.html
+    <full_path_to_Coderage_project>/Results/html/coverageAnalysis.html
      
