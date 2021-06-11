@@ -6,18 +6,17 @@ The purpose of this project is to enable easy and efficient analyzing and conclu
 # Project license:
 #### MIT
 
-# Packages to install (inside terminal):
+# How to run:
+#### 1. Packages to install (inside terminal):
     pip install pytest
     pip install pytest-cov
     pip install pytest-html
     if produced an error "Could not install packages due to an EnvironmentError" then try pip install --user <package name>
-# How to run:
-## General files:
-    1. add __ init__.py file to the code package you want to test. 
-    2. name your test files *test.py 
-    3. go to command line and run the following:
+ #### 2. add __ init__.py file to the code package you want to test. 
+ #### 3. name your test files *test.py 
+ #### 4. go to command line and run the following:
        python main.py module=module1,module2 tests=test1,test2 out_dir=results
-## Out tests:
+## To run our tests (result is in Results folder):
     Go to Coderage directory inside command line and run the following:
     python main.py module=. tests=Tests_Examples
     
