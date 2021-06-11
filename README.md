@@ -14,10 +14,10 @@ The purpose of this project is to enable easy and efficient analyzing and conclu
 ## General files:
     1. add __ init__.py file to the code package you want to test. 
     2. name your test files *test.py 
-    3. go to command line and run the following in command line:
+    3. go to command line and run the following:
        python main.py module=module1,module2 tests=test1,test2 out_dir=results
 ## Out tests:
-    Go to Coderage directory and run the following in command line
+    Go to Coderage directory inside command line and run the following:
     python main.py module=. tests=Tests_Examples
     
      
