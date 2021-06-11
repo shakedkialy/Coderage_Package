@@ -10,7 +10,7 @@ The purpose of this project is to enable easy and efficient analyzing and conclu
     pip install pytest
     pip install pytest-cov
     pip install pytest-html
-    if got an error "Could not install packages due to an EnvironmentError" then try pip install --user <package name>
+    if produced an error "Could not install packages due to an EnvironmentError" then try pip install --user <package name>
 # How to run:
 ## General files:
     1. add __ init__.py file to the code package you want to test. 
