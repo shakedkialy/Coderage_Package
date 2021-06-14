@@ -4,6 +4,9 @@
 Coderage is a package that allows running tests and code coverage in comparison over time.
 The purpose of this project is to enable easy and efficient analyzing and conclusion drawing regarding software testing.
 
+# Project license:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Requirements for Installing:  
 - `git clone https://github.com/shakedkialy/Coderage.git`
