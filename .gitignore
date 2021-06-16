@@ -1,0 +1,4 @@
+__pycache__/*
+results/*
+.coverage
+Tests_Examples/__pycache__/*
