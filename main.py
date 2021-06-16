@@ -21,6 +21,8 @@ def parse_args(argv):
             output_path = arg.split("=")[1]
         elif "delete_out" in arg:
             delete_out = arg.split("=")[1]
+            if delete_out == "False":
+                delete_out = False
         else:
             extra_args += " " + arg
     if code_path == "":
@@ -31,14 +33,13 @@ def parse_args(argv):
 if __name__ == "__main__":
     code_path, test_path, output_path, delete_out, extra_args = parse_args(sys.argv)
 
-#    TODO: check slashes in windows and linux.
     if not os.path.exists(output_path):
         if not delete_out:
             os.system("mkdir %(output_path)s" % {"output_path": output_path})
         else:
             os.system("mkdir %(output_path)s %(annotate_path)s" % {"output_path": output_path,
                                                                  "annotate_path": path.join(output_path, "annotate")})
-    else:
+    elif os.path.exists(path.join(output_path, "html")):
         shutil.rmtree(path.join(output_path, "html"))
 
     db = DatabaseHandler(output_path, code_path, test_path)
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     html = HTML(path.join(output_path, "html"), db)
 
     if delete_out:
-        os.system("rm -r %(Covxml)s %(Testsxml)s %(cov_annotate)s .pytest_cache" % {
+        os.system("rm -r -f %(Covxml)s %(Testsxml)s %(cov_annotate)s .pytest_cache" % {
             "Covxml": path.join(output_path, "coverage.xml"),
             "Testsxml": path.join(output_path, "tests.xml"),
             "cov_annotate": path.join(output_path, "annotate")
