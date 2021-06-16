@@ -3,6 +3,7 @@ from DatabaseHandler import *
 from Parser import *
 from HTML import *
 from os import path
+import argparse
 
 def parse_args(argv):
     """
