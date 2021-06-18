@@ -14,7 +14,8 @@ class DatabaseHandler:
         :param query: query to execute
         :return: all the rows returned by the query
         """
-        self.__open_connection()
+        if not self.__open_connection():
+            exit(1)
         cur = self.connection.cursor()
         cur.execute(query)
 
@@ -92,7 +93,8 @@ class DatabaseHandler:
         :param sql_command: the command that inserts that data
         :param data: the data to insert
         """
-        self.__open_connection()
+        if not self.__open_connection():
+            exit(1)
         for line in data:
             cur = self.connection.cursor()
             cur.execute(sql_command, line)
