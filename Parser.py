@@ -1,6 +1,7 @@
 import os
 import xml.etree.ElementTree as et
 from datetime import datetime, timezone
+import re
 
 class Parser:
     """
@@ -97,7 +98,7 @@ class Parser:
         file_name = file_name[:file_name.index(',')]
         file_name = file_name.replace('_', '/')
         with open(file_path, 'r') as file:
-            functions = file.read().split('> def')
+            functions = re.split('>(\s)+def', file.read())
             for function in functions[1:]:
                 function_name = function.split('\n')[0]
                 try:
